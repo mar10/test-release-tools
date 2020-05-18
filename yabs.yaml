@@ -36,20 +36,20 @@ tasks:
   #  'bump': increment manifest.version and synchronize other JSON files
   - task: bump
     #  bump also requires a mode argument (yabs:target:MODE)
-    inc: null               #  Override 'yabs:target:MODE'
-    space: 2                #  Indentation used when writing JSON files
-    syncVersion: true       #  Only increment master manifest, then copy
-                            #  version to secondaries
-    syncFields: []          #  Synchronize entries from master to
-                            #  secondaries (if field exists)
-    updateConfig: pkg       #  Make sure pkg.version contains the new value
+    inc: null               #  Override 'yabs run --inc MODE' if set
+    # space: 2                #  Indentation used when writing JSON files
+    # syncVersion: true       #  Only increment master manifest, then copy
+    #                         #  version to secondaries
+    # syncFields: []          #  Synchronize entries from master to
+    #                         #  secondaries (if field exists)
+    # updateConfig: pkg       #  Make sure pkg.version contains the new value
 
   #  'commit': Commit modified files
   - task: commit
     add: []                 # Also `git add` these files ('.' for all)
     add_known: true         # Commit with -a flag
     message: |
-      Bumping version to {%= version %}
+      Bumping version to {version}
 
   #  'githubRelease': Create a release on GitHub
   - task: githubRelease
@@ -57,9 +57,9 @@ tasks:
     auth:
       usernameVar: GITHUB_USERNAME
       passwordVar: GITHUB_PASSWORD
-    name: 'v{%= version %}'
+    name: 'v{version}'
     body: |
-      Released {%= version %}
+      Released {version}
       [Commit details](https://github.com/{%= repo %}/compare/{%= currentTagName %}...{%= lastTagName %}).
     draft: true
     prerelease: false
@@ -79,19 +79,19 @@ tasks:
   #   #  Shortcut patterns (pass false to disable):
   #   setTimestamp: "{%= grunt.template.today('isoUtcDateTime') %}"
   #                             #  Replace '@@timestamp' with current datetime
-  #   setVersion: '{%= version %}'   #  Replace '@@version' with current version
+  #   setVersion: '{version}'   #  Replace '@@version' with current version
 
   # #  'run': Run arbitrary shell command
   - task: exec
-    args: ["ls"]                #  (Tasks must be defined in the current Gruntfile)
+    args: ["ls"]            #  (Tasks must be defined in the current Gruntfile)
     silent: false           #  `true`: suppress output
     ignore_errors: false    #  `true`: show warning, but proceed on errors
 
   #  'tag': Create an annotated tag
   - task: tag               #
-    name: v{%= version %}   #
+    name: v{version}        #
     message: |              #
-      Version {%= version %}
+      Version {version}
 
   - task: bump
     #  bump also requires a mode argument (yabs:target:MODE)
