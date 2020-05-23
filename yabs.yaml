@@ -2,7 +2,7 @@
 # See https://github.com/mar10/yabs
 file_version: yabs#1
 config:
-  #  Options used as default for all tools in this workflow
+  # Options used as default for all tools in this workflow
   project: ''                # Mandatory:
   repo: 'mar10/test_release_tool'
   version:
@@ -11,47 +11,81 @@ config:
       # match: '__version__\s*=\s*[''\"](\d+\.\d+\.\d+).*[''\"]'
       # template: '__version__ = "{version}"'
     # - type: setup_cfg        # First entry is master for synchronizing
-    #   entry: metadata.version
-    #   template:
+    #  entry: metadata.version
+    #  template:
   max_increment: minor
   branches:                  # Allowed git branches
     - master
 
 
 tasks:
-  #  The following tools are available. They are executed in the order
-  #  listed here
+  # The following tools are available. They are executed in the order
+  # listed here
 
-  #  'check': Assert preconditons and fail otherwise
+  # 'check': Assert preconditons and fail otherwise
   - task: check
-    branch: master          #  Current branch must be in this list
-    can_push: true          #  Test if 'git push' would/would not succeed
-    # clean: true             #  Repo must/must not contain modifications?
-    cmp_version: null       #  E.g. set to 'gt' to assert that the current
-                            #  version is higher than the latest tag (gt,
-                            #  gte, lt, lte, eq, neq)
-    check_connection: null  # TODO: internet available
-    up_to_date: true        # TODO: everything pulled from remote
+    branch: master          # Current branch must be in this list
+    can_push: true          # Test if 'git push' would/would not succeed
+    connected: null         # TODO: internet available
+    # clean: true             # Repo must/must not contain modifications
+    cmp_version: null       # E.g. set to 'gt' to assert that the current
+                            # version is higher than the latest tag (gt,
+                            # gte, lt, lte, eq, neq)
+    os: null                # (str, list)
+    python: ">=3.5"         # SemVer specifier
+    twine: true             # `twine` is available
+    up_to_date: true        # everything pulled from remote
+    venv: true              # running inside a virtual environment
+    version: true           # `setup.py --version` returns the configured version
 
-  #  'bump': increment manifest.version and synchronize other JSON files
+  # 'run': Run arbitrary shell command
+  - task: exec
+    args: ["tox", "-e", "lint"]     # shell command and optional arguments
+    # dry_run_args: ["pwd"]   #
+    always: true            # `true`: run even in dry-run mode
+    silent: false           # `true`: suppress output
+    ignore_errors: false    # `true`: show warning, but proceed on errors (exit code != 0)
+
+  # 'bump': increment manifest.version and synchronize other JSON files
   - task: bump
-    #  bump also requires a mode argument (yabs:target:MODE)
-    inc: null               #  Override 'yabs run --inc MODE' if set
-    # space: 2                #  Indentation used when writing JSON files
-    # syncVersion: true       #  Only increment master manifest, then copy
-    #                         #  version to secondaries
-    # syncFields: []          #  Synchronize entries from master to
-    #                         #  secondaries (if field exists)
-    # updateConfig: pkg       #  Make sure pkg.version contains the new value
+    # bump also requires a mode argument (yabs:target:MODE)
+    inc: null               # Use value passed as 'yabs run INC'
 
-  #  'commit': Commit modified files
+  # # 'replace': In-place string replacements
+  # # (Uses https://github.com/outaTiME/applause)
+  # - task: replace
+  #  files: null               # minimatch globbing pattern
+  #  patterns: []              # See https://github.com/outaTiME/applause
+  #  # Shortcut patterns (pass false to disable):
+  #  setTimestamp: "{%= grunt.template.today('isoUtcDateTime') %}"
+  #                            # Replace '@@timestamp' with current datetime
+  #  setVersion: '{version}'   # Replace '@@version' with current version
+
+  # 'pypiRelease': Create a release on PyPI
+  - task: pypiRelease
+    sdist: true
+    wheel: true
+    upload: false
+    revert_bump_on_error: true
+
+    # 'commit': Commit modified files
   - task: commit
     add: []                 # Also `git add` these files ('.' for all)
     add_known: true         # Commit with -a flag
     message: |
       Bumping version to {version}
 
-  #  'githubRelease': Create a release on GitHub
+  # 'tag': Create an annotated tag
+  - task: tag               #
+    name: v{version}        #
+    message: |              #
+      Version {version}
+
+  # 'push': Push changes and tags
+  - task: push
+    tags: true              # Use `--folow-tags`
+
+  # 'githubRelease': Create a release on GitHub
   - task: githubRelease
     repo: null              # 'owner/repo'
     auth:
@@ -64,37 +98,8 @@ tasks:
     draft: true
     prerelease: false
 
-  #  'push': Push changes and tags
-  - task: push
-    target: ''              #  E.g. 'upstream'
-    tags: false             #  Also push tags
-    useFollowTags: false    #  Use `--folow-tags` instead of `&& push --tags`
-                            #  (requires git 1.8.3+)
-
-  # #  'replace': In-place string replacements
-  # #  (Uses https://github.com/outaTiME/applause)
-  # - task: replace
-  #   files: null               #  minimatch globbing pattern
-  #   patterns: []              #  See https://github.com/outaTiME/applause
-  #   #  Shortcut patterns (pass false to disable):
-  #   setTimestamp: "{%= grunt.template.today('isoUtcDateTime') %}"
-  #                             #  Replace '@@timestamp' with current datetime
-  #   setVersion: '{version}'   #  Replace '@@version' with current version
-
-  # #  'run': Run arbitrary shell command
-  - task: exec
-    args: ["ls"]            #  (Tasks must be defined in the current Gruntfile)
-    silent: false           #  `true`: suppress output
-    ignore_errors: false    #  `true`: show warning, but proceed on errors
-
-  #  'tag': Create an annotated tag
-  - task: tag               #
-    name: v{version}        #
-    message: |              #
-      Version {version}
-
   - task: bump
-    #  bump also requires a mode argument (yabs:target:MODE)
+    # bump also requires a mode argument (yabs:target:MODE)
     inc: "postrelease"
 
   - task: commit
