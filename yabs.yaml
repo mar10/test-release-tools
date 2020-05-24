@@ -4,7 +4,7 @@ file_version: yabs#1
 config:
   # Options used as default for all tools in this workflow
   project: ''                # Mandatory:
-  repo: 'mar10/test_release_tool'
+  repo: 'mar10/test-release-tool'
   version:
     - type: __version__        # First entry is master for synchronizing
       file: src/test_release_tool/__init__.py
@@ -38,12 +38,25 @@ tasks:
     venv: true              # running inside a virtual environment
     version: true           # `setup.py --version` returns the configured version
 
+  # - task: githubRelease
+  #   repo: null              # 'owner/repo'
+  #   auth:
+  #     oauthTokenVar: GITHUB_OAUTH_TOKEN
+  #     # usernameVar: GITHUB_USERNAME
+  #     # passwordVar: GITHUB_PASSWORD
+  #   name: 'v{version}'
+  #   body: |
+  #     Released {version}
+  #     [Commit details](https://github.com/{%= repo %}/compare/{%= currentTagName %}...{%= lastTagName %}).
+  #   draft: true
+  #   prerelease: false
+
   # 'run': Run arbitrary shell command
   - task: exec
     args: ["tox", "-e", "lint"]     # shell command and optional arguments
     # dry_run_args: ["pwd"]   #
     always: true            # `true`: run even in dry-run mode
-    silent: false           # `true`: suppress output
+    silent: true           # `true`: suppress output
     ignore_errors: false    # `true`: show warning, but proceed on errors (exit code != 0)
 
   # 'bump': increment manifest.version and synchronize other JSON files
@@ -61,13 +74,6 @@ tasks:
   #                            # Replace '@@timestamp' with current datetime
   #  setVersion: '{version}'   # Replace '@@version' with current version
 
-  # 'pypiRelease': Create a release on PyPI
-  - task: pypiRelease
-    sdist: true
-    wheel: true
-    upload: false
-    revert_bump_on_error: true
-
     # 'commit': Commit modified files
   - task: commit
     add: []                 # Also `git add` these files ('.' for all)
@@ -83,20 +89,26 @@ tasks:
 
   # 'push': Push changes and tags
   - task: push
-    tags: true              # Use `--folow-tags`
+    tags: true              # Use `--follow-tags`
+
+  # 'pypiRelease': Create a release on PyPI
+  - task: pypiRelease
+    build:
+      - sdist
+      - bdist_wheel
+    upload: true
+    # revert_bump_on_error: true
 
   # 'githubRelease': Create a release on GitHub
   - task: githubRelease
-    repo: null              # 'owner/repo'
     auth:
-      usernameVar: GITHUB_USERNAME
-      passwordVar: GITHUB_PASSWORD
+      oauthTokenVar: GITHUB_OAUTH_TOKEN
     name: 'v{version}'
     body: |
       Released {version}
       [Commit details](https://github.com/{%= repo %}/compare/{%= currentTagName %}...{%= lastTagName %}).
     draft: true
-    prerelease: false
+    prerelease: null
 
   - task: bump
     # bump also requires a mode argument (yabs:target:MODE)
