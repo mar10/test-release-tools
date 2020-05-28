@@ -106,7 +106,7 @@ tasks:
     name: 'v{version}'
     body: |
       Released {version}
-      [Commit details](https://github.com/{%= repo %}/compare/{%= currentTagName %}...{%= lastTagName %}).
+      [Commit details](https://github.com/{repo}/compare/{currentTagName}...{lastTagName}).
     draft: true
     prerelease: null
 
