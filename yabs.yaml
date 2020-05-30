@@ -106,12 +106,11 @@ tasks:
     name: 'v{version}'
     body: |
       Released {version}
-      [Commit details](https://github.com/{repo}/compare/{currentTagName}...{lastTagName}).
+      [Commit details](https://github.com/{repo}/compare/{org_tag_name}...{tag_name}).
     draft: true
     prerelease: null
 
   - task: bump
-    # bump also requires a mode argument (yabs:target:MODE)
     inc: "postrelease"
     prerelease_prefix: "a"
 
