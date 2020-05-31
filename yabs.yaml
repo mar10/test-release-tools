@@ -24,7 +24,7 @@ tasks:
 
   # 'check': Assert preconditons and fail otherwise
   - task: check
-    branch: master          # Current branch must be in this list
+    branches: master          # Current branch must be in this list
     can_push: true          # Test if 'git push' would/would not succeed
     connected: null         # TODO: internet available
     # clean: true             # Repo must/must not contain modifications
@@ -104,11 +104,14 @@ tasks:
     auth:
       oauthTokenVar: GITHUB_OAUTH_TOKEN
     name: 'v{version}'
-    body: |
+    message: |
       Released {version}
       [Commit details](https://github.com/{repo}/compare/{org_tag_name}...{tag_name}).
     draft: true
-    prerelease: null
+    prerelease: null  # null: guess from version number format
+    upload:
+      - sdist
+      - bdist_wheel
 
   - task: bump
     inc: "postrelease"
