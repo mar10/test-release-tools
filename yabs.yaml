@@ -26,11 +26,12 @@ tasks:
   - task: check
     branches: master        # Current branch must be in this list
     can_push: true          # Test if 'git push' would/would not succeed
-    connected: null         # TODO: internet available
+    # connected: null         # TODO: internet available
+    github: true            # GitHub repo name valid and online accessible
     clean: true             # Repo must/must not contain modifications
-    cmp_version: null       # E.g. set to 'gt' to assert that the current
-                            # version is higher than the latest tag (gt,
-                            # gte, lt, lte, eq, neq)
+    # cmp_version: null       # E.g. set to 'gt' to assert that the current
+    #                         # version is higher than the latest tag (gt,
+    #                         # gte, lt, lte, eq, neq)
     os: null                # (str, list)
     python: ">=3.5"         # SemVer specifier
     twine: true             # `twine` is available
