@@ -24,10 +24,10 @@ tasks:
 
   # 'check': Assert preconditons and fail otherwise
   - task: check
-    branches: master          # Current branch must be in this list
+    branches: master        # Current branch must be in this list
     can_push: true          # Test if 'git push' would/would not succeed
     connected: null         # TODO: internet available
-    # clean: true             # Repo must/must not contain modifications
+    clean: true             # Repo must/must not contain modifications
     cmp_version: null       # E.g. set to 'gt' to assert that the current
                             # version is higher than the latest tag (gt,
                             # gte, lt, lte, eq, neq)
@@ -38,25 +38,19 @@ tasks:
     venv: true              # running inside a virtual environment
     version: true           # `setup.py --version` returns the configured version
 
-  # - task: githubRelease
-  #   repo: null              # 'owner/repo'
-  #   auth:
-  #     oauthTokenVar: GITHUB_OAUTH_TOKEN
-  #     # usernameVar: GITHUB_USERNAME
-  #     # passwordVar: GITHUB_PASSWORD
-  #   name: 'v{version}'
-  #   body: |
-  #     Released {version}
-  #     [Commit details](https://github.com/{%= repo %}/compare/{%= currentTagName %}...{%= lastTagName %}).
-  #   draft: true
-  #   prerelease: false
-
   # 'run': Run arbitrary shell command
   - task: exec
     args: ["tox", "-e", "lint"]     # shell command and optional arguments
     # dry_run_args: ["pwd"]   #
     always: true            # `true`: run even in dry-run mode
-    silent: true           # `true`: suppress output
+    silent: true            # `true`: suppress output
+    ignore_errors: false    # `true`: show warning, but proceed on errors (exit code != 0)
+
+  - task: exec
+    args: ["tox"]           # shell command and optional arguments
+    # dry_run_args: ["pwd"]   #
+    always: true            # `true`: run even in dry-run mode
+    silent: true            # `true`: suppress output
     ignore_errors: false    # `true`: show warning, but proceed on errors (exit code != 0)
 
   # 'bump': increment manifest.version and synchronize other JSON files
@@ -79,7 +73,7 @@ tasks:
     add: []                 # Also `git add` these files ('.' for all)
     add_known: true         # Commit with -a flag
     message: |
-      Bumping version to {version}
+      Bump version to {version}
 
   # 'tag': Create an annotated tag
   - task: tag               #

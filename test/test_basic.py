@@ -3,11 +3,10 @@
 # Licensed under the MIT license: https://www.opensource.org/licenses/mit-license.php
 """
 """
-# import pytest
-
 from test_release_tool.main import run
 
 
 class TestVersionManager:
     def test_basics(self):
         assert run() == 42
+        # assert run() == 43
