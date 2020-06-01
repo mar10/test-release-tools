@@ -5,6 +5,8 @@ config:
   # Options used as default for all tools in this workflow
   project: ''                # Mandatory:
   repo: 'mar10/test-release-tool'
+  gh_auth:
+    oauth_token_var: GITHUB_OAUTH_TOKEN
   version:
     - type: __version__        # First entry is master for synchronizing
       file: src/test_release_tool/__init__.py
@@ -86,18 +88,18 @@ tasks:
   - task: push
     tags: true              # Use `--follow-tags`
 
-  # 'pypiRelease': Create a release on PyPI
-  - task: pypiRelease
+  # 'pypi_release': Create a release on PyPI
+  - task: pypi_release
     build:
       - sdist
       - bdist_wheel
     upload: true
     # revert_bump_on_error: true
 
-  # 'githubRelease': Create a release on GitHub
-  - task: githubRelease
-    auth:
-      oauthTokenVar: GITHUB_OAUTH_TOKEN
+  # 'github_release': Create a release on GitHub
+  - task: github_release
+    # gh_auth:
+    #   oauth_token_var: GITHUB_OAUTH_TOKEN
     name: 'v{version}'
     message: |
       Released {version}
