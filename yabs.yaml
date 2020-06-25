@@ -1,9 +1,9 @@
 # Yabs Workflow Definition
 # See https://github.com/mar10/yabs
+
 file_version: yabs#1
+
 config:
-  # Options used as default for all tools in this workflow
-  project: ''                # Mandatory:
   repo: 'mar10/test-release-tool'
   gh_auth:
     oauth_token_var: GITHUB_OAUTH_TOKEN
@@ -56,10 +56,9 @@ tasks:
     silent: true            # `true`: suppress output
     ignore_errors: false    # `true`: show warning, but proceed on errors (exit code != 0)
 
-  # 'bump': increment manifest.version and synchronize other JSON files
+  # 'bump': version by `--inc` argument
   - task: bump
-    # bump also requires a mode argument (yabs:target:MODE)
-    inc: null               # Use value passed as 'yabs run INC'
+    # inc: null               # Use value passed as 'yabs run --inc INC'
 
   # # 'replace': In-place string replacements
   # # (Uses https://github.com/outaTiME/applause)
@@ -111,8 +110,8 @@ tasks:
       - bdist_wheel
 
   - task: bump
-    inc: "postrelease"
-    prerelease_prefix: "a"
+    inc: postrelease
+    prerelease_prefix: 'a'
 
   - task: commit
     add_known: true
