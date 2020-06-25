@@ -5,10 +5,14 @@ verify_ssl = true
 
 [dev-packages]
 tox = "*"
-twine = "*"
 pytest = "*"
+yabs = "*"
 
 [packages]
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+# TODO: remove this when sty releases a real version
+allow_prereleases = true
