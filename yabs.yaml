@@ -18,9 +18,7 @@ tasks:
   # 'cowsay':
   - task: cowsay
     message: |
-      Dear fellow cattle,
-      We just released version {version}.
-      (This message was brought to you by the 'yabs-cowsay' extension.)
+      About to start...
 
   # 'check': Assert preconditons and fail otherwise
   - task: check
@@ -105,3 +103,8 @@ tasks:
 
   - task: push
 
+  - task: cowsay
+    message: |
+      Dear fellow cattle,
+      We just released version {version}.
+      (This message was brought to you by the 'yabs-cowsay' extension.)
