@@ -363,11 +363,11 @@
         },
         "yabs": {
             "hashes": [
-                "sha256:7b79ddde3737128b967e58cfe500f12c699a1068df260ee1cabf89f27db19413",
-                "sha256:8a5f2f03749225c1eddcaa9eca9eef7c5b8a7d6a4feb1521f72f8e1862697006"
+                "sha256:441cdeb19d0e8862f8aa432b8cba571935e30fe78c27191e80693174b09eb38e",
+                "sha256:598f0723fca764e613ba5654fdeaecdbd90fd67ef2d8d1b6671fcb3cc07ffde7"
             ],
             "index": "pypi",
-            "version": "==0.1.1"
+            "version": "==0.2.0"
         },
         "zipp": {
             "hashes": [
