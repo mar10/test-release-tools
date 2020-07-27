@@ -83,7 +83,6 @@ tasks:
   - task: pypi_release
     # upload:
     #   - sdist
-    # revert_bump_on_error: true
 
   # 'github_release': Create a release on GitHub
   - task: github_release
@@ -91,7 +90,7 @@ tasks:
     message: |
       Released {version}
       [Commit details](https://github.com/{repo}/compare/{org_tag_name}...{tag_name}).
-    draft: true
+    # draft: true
     prerelease: null  # null: guess from version number format
     upload:
       - sdist
