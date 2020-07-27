@@ -69,16 +69,20 @@ tasks:
     message: |
       Version {version}
 
+  - task: build
+    targets:
+      - sdist
+      - bdist_wheel
+    # revert_bump_on_error: true
+
   # 'push': Push changes and tags
   - task: push
     tags: true              # Use `--follow-tags`
 
   # 'pypi_release': Create a release on PyPI
   - task: pypi_release
-    build:
-      - sdist
-      - bdist_wheel
-    upload: true
+    # upload:
+    #   - sdist
     # revert_bump_on_error: true
 
   # 'github_release': Create a release on GitHub
