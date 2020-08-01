@@ -16,9 +16,9 @@ config:
 
 tasks:
   # 'cowsay':
-  - task: cowsay
-    message: |
-      About to start...
+  # - task: cowsay
+  #   message: |
+  #     About to start...
 
   # 'check': Assert preconditons and fail otherwise
   - task: check
@@ -46,16 +46,7 @@ tasks:
 
   # 'bump': version by `--inc` argument
   - task: bump
-    # inc: null               # Use value passed as 'yabs run --inc INC'
-
-  # 'replace': In-place string replacements
-  # - task: replace
-  #   files: null               # minimatch globbing pattern
-  #   patterns: []              # See https://github.com/outaTiME/applause
-  #   # Shortcut patterns (pass false to disable):
-  #   setTimestamp: "{%= grunt.template.today('isoUtcDateTime') %}"
-  #                             # Replace '@@timestamp' with current datetime
-  #   setVersion: '{version}'   # Replace '@@version' with current version
+    inc: null               # Use value passed as 'yabs run --inc INC'
 
     # 'commit': Commit modified files
   - task: commit
@@ -92,9 +83,9 @@ tasks:
       [Commit details](https://github.com/{repo}/compare/{org_tag_name}...{tag_name}).
     # draft: true
     prerelease: null  # null: guess from version number format
-    upload:
-      - sdist
-      - bdist_wheel
+    # upload:
+    #   - sdist
+    #   - bdist_wheel
 
   - task: bump
     inc: postrelease
