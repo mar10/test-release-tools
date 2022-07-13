@@ -4,7 +4,7 @@
 file_version: yabs#1
 
 config:
-  repo: 'mar10/test-release-tool'
+  repo: 'mar10/yabs-test'
   gh_auth:
     oauth_token_var: GITHUB_OAUTH_TOKEN
   version:
@@ -27,11 +27,13 @@ tasks:
     github: true            # GitHub repo name valid and online accessible
     clean: true             # Repo must/must not contain modifications
     os: null                # (str, list)
-    python: ">=3.5"         # SemVer specifier
+    python: ">=3.9"         # SemVer specifier
     twine: true             # `twine` is available
     up_to_date: true        # everything pulled from remote
     venv: true              # running inside a virtual environment
     version: true           # `setup.py --version` returns the configured version
+    # winget: true           # `wingetcreate` is available
+    yabs: ">=0.5"           # Minimal Yabs version
 
   # 'run': Run arbitrary shell command
   - task: exec
@@ -80,6 +82,8 @@ tasks:
     name: 'v{version}'
     message: |
       Released {version}
+
+      [Commit details](https://github.com/{repo}/blob/master/CHANGELOG.md),
       [Commit details](https://github.com/{repo}/compare/{org_tag_name}...{tag_name}).
     # draft: true
     prerelease: null  # null: guess from version number format
@@ -97,8 +101,8 @@ tasks:
 
   - task: push
 
-  - task: cowsay
-    message: |
-      Dear fellow cattle,
-      We just released version {version}.
-      (This message was brought to you by the 'yabs-cowsay' extension.)
+  # - task: cowsay
+  #   message: |
+  #     Dear fellow cattle,
+  #     We just released version {version}.
+  #     (This message was brought to you by the 'yabs-cowsay' extension.)

@@ -6,13 +6,16 @@ verify_ssl = true
 [dev-packages]
 tox = "*"
 pytest = "*"
-yabs = "*"
+yabs-cowsay = "*"
+yabs = {editable = true, path = "./../yabs"}
+pip = "*"
+install = "*"
 
 [packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.10"
 
 [pipenv]
 # TODO: remove this when sty releases a real version
-allow_prereleases = true
+#allow_prereleases = true
