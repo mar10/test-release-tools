@@ -4,12 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+cx_Freeze = "*"
+install = "*"
 tox = "*"
+pip = "*"
 pytest = "*"
 yabs-cowsay = "*"
 yabs = {editable = true, path = "./../yabs"}
-pip = "*"
-install = "*"
 
 [packages]
 

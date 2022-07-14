@@ -9,7 +9,7 @@ config:
     oauth_token_var: GITHUB_OAUTH_TOKEN
   version:
     - type: __version__        # First entry is master for synchronizing
-      file: src/test_release_tool/__init__.py
+      file: src/yabs_test/__init__.py
   max_increment: minor
   branches:                  # Allowed git branches
     - master
@@ -27,14 +27,14 @@ tasks:
     github: true            # GitHub repo name valid and online accessible
     clean: true             # Repo must/must not contain modifications
     os: null                # (str, list)
+    pypi: true              # `twine` is available, pypi package accessible
     python: ">=3.9"         # SemVer specifier
-    twine: true             # `twine` is available
     up_to_date: true        # everything pulled from remote
     venv: true              # running inside a virtual environment
     version: true           # `setup.py --version` returns the configured version
-    # winget: true           # `wingetcreate` is available
+    winget: true            # `wingetcreate` is available
     yabs: ">=0.5"           # Minimal Yabs version
-
+    
   # 'run': Run arbitrary shell command
   - task: exec
     args: ["tox", "-e", "lint"]     # shell command and optional arguments
@@ -68,6 +68,18 @@ tasks:
       - bdist_wheel
     # revert_bump_on_error: true
 
+  # Build MSI Installer.
+  - task: exec
+    args: ["python", "setup_bdist_msi.py", "bdist_msi"]
+    # always: true
+    silent: true            # `true`: suppress output
+    # stream: true
+    ignore_errors: true  # Try it (will fail on non-Windows)
+    add_artifacts:  # Add new files if any
+      folder: "dist"  
+      matches:
+        bdist_msi: '.*\.msi'
+
   # 'push': Push changes and tags
   - task: push
     tags: true              # Use `--follow-tags`
@@ -100,6 +112,10 @@ tasks:
       Bump prerelease ({version}) [ci skip]
 
   - task: push
+
+  - task: winget_release
+    upload: "bdist_msi"
+    package_id: foobar
 
   # - task: cowsay
   #   message: |
