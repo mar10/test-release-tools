@@ -9,7 +9,7 @@ config:
     oauth_token_var: GITHUB_OAUTH_TOKEN
   version:
     - type: __version__        # First entry is master for synchronizing
-      file: src/yabs_test/__init__.py
+      file: yabs_test/__init__.py
   max_increment: minor
   branches:                  # Allowed git branches
     - master
@@ -33,7 +33,7 @@ tasks:
     venv: true              # running inside a virtual environment
     version: true           # `setup.py --version` returns the configured version
     winget: true            # `wingetcreate` is available
-    yabs: ">=0.5"           # Minimal Yabs version
+    # yabs: ">=0.5"           # Minimal Yabs version
     
   # 'run': Run arbitrary shell command
   - task: exec
@@ -95,7 +95,7 @@ tasks:
     message: |
       Released {version}
 
-      [Commit details](https://github.com/{repo}/blob/master/CHANGELOG.md),
+      [Changelog](https://github.com/{repo}/blob/master/CHANGELOG.md),
       [Commit details](https://github.com/{repo}/compare/{org_tag_name}...{tag_name}).
     # draft: true
     prerelease: null  # null: guess from version number format

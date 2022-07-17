@@ -5,10 +5,7 @@ import re
 import sys
 
 from setuptools import setup
-from cx_Frcx_Freeze eeze import setup, Executable  # noqa re-import setup
-
-from yabs_test import __version__
-
+from cx_Freeze import setup, Executable  # noqa re-import setup
 
 # Check for Windows MSI Setup
 if "bdist_msi" not in sys.argv:  # or len(sys.argv) != 2:
@@ -17,12 +14,31 @@ if "bdist_msi" not in sys.argv:  # or len(sys.argv) != 2:
         "Example `{} bdist_msi`".format(sys.argv, sys.argv[0])
     )
 
+from yabs_test import __version__
+
 org_version = __version__
 
-# 'setup.py upload' fails on Vista, because .pypirc is searched on 'HOME' path
-if "HOME" not in os.environ and "HOMEPATH" in os.environ:
-    os.environ.setdefault("HOME", os.environ.get("HOMEPATH", ""))
-    print("Initializing HOME environment variable to '{}'".format(os.environ["HOME"]))
+# # Get version number without importing
+# # In this case, we need special code, because
+# #     from yabs_test import __version__
+# # we have a /src folder:
+# # See https://packaging.python.org/en/latest/guides/single-sourcing-package-version/
+
+# def read_version(rel_path):
+#     here = os.path.abspath(os.path.dirname(__file__))
+#     with open(os.path.join(here, rel_path), "r") as fp:
+#         for line in fp.read().splitlines():
+#             if line.startswith("__version__"):
+#                 delim = '"' if '"' in line else "'"
+#                 return line.split(delim)[1]
+#     raise RuntimeError("Unable to find version string.")
+
+# org_version = read_version("yabs_test/__init__.py")
+
+# # 'setup.py upload' fails on Vista, because .pypirc is searched on 'HOME' path
+# if "HOME" not in os.environ and "HOMEPATH" in os.environ:
+#     os.environ.setdefault("HOME", os.environ.get("HOMEPATH", ""))
+#     print("Initializing HOME environment variable to '{}'".format(os.environ["HOME"]))
 
 # Since we included pywin32 extensions, cx_Freeze tries to create a
 # version resource. This only supports the 'a.b.c[.d]' format.
@@ -30,34 +46,41 @@ if "HOME" not in os.environ and "HOMEPATH" in os.environ:
 major, minor, patch = org_version.split(".", 3)
 major = int(major)
 minor = int(minor)
+
+# We have a pre-release version, e.g. '1.2.3-a1'.
+# This is presumably a post-release increment after '1.2.2' release.
+# It must NOT be converted to '1.2.3.1', since that would be *greater*
+# than '1.2.3', which is not even released yet.
+#
+# Approach 1: allow_post_releases = False
+#     We cannot guarantee that '1.2.2.1' is correct either, so for
+#     pre-releases we assume '0.0.0.0':
+#
+# Approach 2: allow_post_releases = True
+#     '1.2.3-a1' was presumably a post-release increment after '1.2.2',
+#     so assume '1.2.2.1'
+
+allow_post_releases = False
+
 if "-" in patch:
-    # We have a pre-release version, e.g. '1.2.3-a1'.
-    # This is presumably a post-release increment after '1.2.2' release.
-    # It must NOT be converted to '1.2.3.1', since that would be *greater*
-    # than '1.2.3', which is not even released yet.
-    # Approach 1:
-    #     We cannot guarantee that '1.2.2.1' is correct either, so for
-    #     pre-releases we assume '0.0.0.0':
-    # major = minor = patch = alpha = 0
-    # Approach 2:
-    #     '1.2.3-a1' was presumably a post-release increment after '1.2.2',
-    #     so assume '1.2.2.1':
     patch, alpha = patch.split("-", 1)
     patch = int(patch)
     # Remove leading letters
     alpha = re.sub("^[a-zA-Z]+", "", alpha)
     alpha = int(alpha)
-    if patch >= 1:
+    if patch >= 1 and allow_post_releases:
         patch -= 1  # 1.2.3-a1 => 1.2.2.1
     else:
         # may be 1.2.0-a1 or 2.0.0-a1: we don't know what the previous release was
         major = minor = patch = alpha = 0
 else:
+    patch, alpha = patch.split("-", 1)
+    patch = patch.split("-", 1)[0]
     patch = int(patch)
     alpha = 0
 
-version = "{}.{}.{}.{}".format(major, minor, patch, alpha)
-print("Version {}, using {}".format(org_version, version))
+version = f"{major}.{minor}.{patch}.{alpha}"
+print(f"Package version {org_version}: using installer version {version}")
 
 try:
     readme = open("README.md", "rt").read()
@@ -70,7 +93,7 @@ except IOError:
 #    https://github.com/marcelotduarte/cx_Freeze/issues/1541
 install_requires = []
 setup_requires = install_requires
-tests_require = []  
+tests_require = []
 
 executables = [
     Executable(
@@ -112,7 +135,7 @@ setup(
     maintainer="Martin Wendt",
     maintainer_email="yabs@wwwendt.de",
     url="https://github.com/mar10/yabs_test",
-    description="Dummy application to release workflows with mar10/yabs.",
+    description="Dummy application to test release workflows with mar10/yabs.",
     long_description=readme,
     long_description_content_type="text/markdown",
     # Not required for this build-only setup config:
@@ -122,6 +145,7 @@ setup(
     install_requires=install_requires,
     setup_requires=setup_requires,
     tests_require=tests_require,
+    # package_dir="src",
     packages=["yabs_test"],
     zip_safe=False,
     extras_require={},
