@@ -23,16 +23,16 @@ tasks:
   # 'check': Assert preconditons and fail otherwise
   - task: check
     branches: master        # Current branch must be in this list
-    can_push: true          # Test if 'git push' would/would not succeed
-    github: true            # GitHub repo name valid and online accessible
-    clean: true             # Repo must/must not contain modifications
+    # can_push: true          # Test if 'git push' would/would not succeed
+    # github: true            # GitHub repo name valid and online accessible
+    # clean: true             # Repo must/must not contain modifications
     os: null                # (str, list)
-    pypi: true              # `twine` is available, pypi package accessible
+    # pypi: true              # `twine` is available, pypi package accessible
     python: ">=3.9"         # SemVer specifier
-    up_to_date: true        # everything pulled from remote
+    # up_to_date: true        # everything pulled from remote
     venv: true              # running inside a virtual environment
-    version: true           # `setup.py --version` returns the configured version
-    winget: true            # `wingetcreate` is available
+    # version: true           # `setup.py --version` returns the configured version
+    winget: null            # `wingetcreate` is available
     # yabs: ">=0.5"           # Minimal Yabs version
     
   # 'run': Run arbitrary shell command
@@ -86,6 +86,8 @@ tasks:
 
   # 'pypi_release': Create a release on PyPI
   - task: pypi_release
+    comment: |
+      Release test with [>abs](https://github.com/mar10/yabs).
     # upload:
     #   - sdist
 
