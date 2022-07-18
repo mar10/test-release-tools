@@ -32,7 +32,7 @@ tasks:
     # up_to_date: true        # everything pulled from remote
     venv: true              # running inside a virtual environment
     # version: true           # `setup.py --version` returns the configured version
-    winget: null            # `wingetcreate` is available
+    winget: null            #  `null`: smart mode (false if `--no-winget`)
     # yabs: ">=0.5"           # Minimal Yabs version
     
   # 'run': Run arbitrary shell command
