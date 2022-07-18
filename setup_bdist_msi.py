@@ -74,8 +74,6 @@ if "-" in patch:
         # may be 1.2.0-a1 or 2.0.0-a1: we don't know what the previous release was
         major = minor = patch = alpha = 0
 else:
-    patch, alpha = patch.split("-", 1)
-    patch = patch.split("-", 1)[0]
     patch = int(patch)
     alpha = 0
 
