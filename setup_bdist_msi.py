@@ -3,8 +3,12 @@
 import re
 import sys
 
-from cx_Freeze import Executable, setup  # noqa re-import setup
-from setuptools import find_packages, setup
+# NOTE: isort must not chage this oimport order:
+# isort: skip_file
+
+from setuptools import setup, find_packages
+
+from cx_Freeze import setup, Executable  # noqa re-import setup
 
 # Check for Windows MSI Setup
 if "bdist_msi" not in sys.argv:  # or len(sys.argv) != 2:
@@ -105,7 +109,7 @@ executables = [
     )
 ]
 
-# See https://cx-freeze.readthedocs.io/en/latest/distutils.html#build-exe
+# See https://cx-freeze.readthedocs.io/en/latest/setup_script.html#build-exe
 build_exe_options = {
     # "init_script": "Console",
     "includes": install_requires,
@@ -114,9 +118,10 @@ build_exe_options = {
         "tkinter",
     ],
     "constants": "BUILD_COPYRIGHT='(c) 2012-2022 Martin Wendt'",
+    # "include_msvcr": True,
 }
 
-# See https://cx-freeze.readthedocs.io/en/latest/distutils.html#bdist-msi
+# See https://cx-freeze.readthedocs.io/en/latest/setup_script.html#bdist-msi
 bdist_msi_options = {
     "upgrade_code": "{F0C1843D-F39F-4848-9E98-085C536200C0}",
     "add_to_path": True,
