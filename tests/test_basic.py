@@ -3,7 +3,7 @@
 # Licensed under the MIT license: https://www.opensource.org/licenses/mit-license.php
 """
 """
-from yabs_test.main import run
+from yabs_test.cli import run
 
 
 class TestVersionManager:

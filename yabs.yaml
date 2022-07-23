@@ -87,7 +87,7 @@ tasks:
   # 'pypi_release': Create a release on PyPI
   - task: pypi_release
     comment: |
-      Release test with [>abs](https://github.com/mar10/yabs).
+      Release test with [Yabs](https://github.com/mar10/yabs).
     # upload:
     #   - sdist
 

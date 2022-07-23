@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
-import os
 import re
 import sys
 
-from setuptools import setup
-from cx_Freeze import setup, Executable  # noqa re-import setup
+from cx_Freeze import Executable, setup  # noqa re-import setup
+from setuptools import find_packages, setup
 
 # Check for Windows MSI Setup
 if "bdist_msi" not in sys.argv:  # or len(sys.argv) != 2:
@@ -86,7 +85,7 @@ except IOError:
     readme = "(readme not found. Running from tox/setup.py test?)"
 
 # NOTE: Only need to list requirements that are not discoverable by scanning
-#       the main package. For example due to dynamic or optional imports.
+#       the cli package. For example due to dynamic or optional imports.
 # Also, cx_Freeze may have difficulties with packages listed here, e.g. PyYAML:
 #    https://github.com/marcelotduarte/cx_Freeze/issues/1541
 install_requires = []
@@ -95,7 +94,7 @@ tests_require = []
 
 executables = [
     Executable(
-        script="yabs_test/main.py",
+        script="yabs_test/cli.py",
         base=None,
         # base="Win32GUI",
         target_name="yabs_test.exe",
@@ -111,6 +110,9 @@ build_exe_options = {
     # "init_script": "Console",
     "includes": install_requires,
     "packages": ["keyring.backends"],  # loaded dynamically
+    "excludes": [
+        "tkinter",
+    ],
     "constants": "BUILD_COPYRIGHT='(c) 2012-2022 Martin Wendt'",
 }
 
@@ -144,11 +146,14 @@ setup(
     setup_requires=setup_requires,
     tests_require=tests_require,
     # package_dir="src",
-    packages=["yabs_test"],
+    packages=find_packages(exclude=["tests"]),
     zip_safe=False,
     extras_require={},
     # cmdclass={"test": ToxCommand, "sphinx": SphinxCommand},
-    entry_points={"console_scripts": ["pyftpsync=yabs_test.main:run"]},
+    entry_points={"console_scripts": ["yabs_test = yabs_test.cli:run"]},
     executables=executables,
-    options={"build_exe": build_exe_options, "bdist_msi": bdist_msi_options},
+    options={
+        "build_exe": build_exe_options,
+        "bdist_msi": bdist_msi_options,
+    },
 )
