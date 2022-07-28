@@ -33,11 +33,10 @@ tasks:
     venv: true              # running inside a virtual environment
     # version: true           # `setup.py --version` returns the configured version
     winget: null            #  `null`: smart mode (false if `--no-winget`)
-    # yabs: ">=0.5"           # Minimal Yabs version
     
   # 'run': Run arbitrary shell command
   - task: exec
-    args: ["tox", "-e", "lint"]     # shell command and optional arguments
+    args: ["tox", "-e", "check"]     # shell command and optional arguments
     always: true            # `true`: run even in dry-run mode
     silent: true            # `true`: suppress output
 
