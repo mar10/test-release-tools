@@ -1,2 +1,2 @@
-myst-parser[linkify]
-sphinxcontrib-mermaid
+# myst-parser[linkify]
+# sphinxcontrib-mermaid
