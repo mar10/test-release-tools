@@ -3,7 +3,7 @@
 import re
 import sys
 
-# NOTE: isort must not chage this oimport order:
+# NOTE: isort must not chage this import order:
 # isort: skip_file
 
 from setuptools import setup, find_packages

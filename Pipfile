@@ -9,7 +9,7 @@ install = "*"
 tox = "*"
 pip = "*"
 pytest = "*"
-yabs-cowsay = "*"
+#yabs-cowsay = "*"
 yabs = {editable = true, path = "./../yabs"}
 
 [packages]

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "86032ab561ef3ac57fefefcf863ac88f9af174f9a00528561a133b6e4d5e8d73"
+            "sha256": "d28ad62697e77316a5206986829decc03def8ba5655e1fe83688e79879581724"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -130,7 +130,7 @@
                 "sha256:854bf444933e37f5824ae7bfc1e98d5bce2ebe4160d46b5edf346a89358e99da",
                 "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"
             ],
-            "markers": "platform_system == 'Windows'",
+            "markers": "sys_platform == 'win32'",
             "version": "==0.4.5"
         },
         "commonmark": {
@@ -297,11 +297,11 @@
         },
         "pip": {
             "hashes": [
-                "sha256:6d55b27e10f506312894a87ccc59f280136bad9061719fac9101bdad5a6bce69",
-                "sha256:a3edacb89022ef5258bf61852728bf866632a394da837ca49eb4303635835f17"
+                "sha256:8d63fcd4ee293e30b644827268a0a973d080e5c7425ef26d427f5eb2126c7681",
+                "sha256:9abf423d5d64f3289ab9d5bf31da9e6234f2e9c5d8dcf1423bcb46b809a02c2c"
             ],
             "index": "pypi",
-            "version": "==22.1.2"
+            "version": "==22.2"
         },
         "pkginfo": {
             "hashes": [
@@ -557,19 +557,19 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:8298d6d56d39be0e3bc13c1c97d133f9b45d797169a0e11cdd0e0489d786f7ec",
-                "sha256:879ba4d1e89654d9769ce13121e0f94310ea32e8d2f8cf587b77c08bbcdb30d6"
+                "sha256:c33ccba33c819596124764c23a97d25f32b28433ba0dedeb77d873a38722c9bc",
+                "sha256:ea6e8fb210b19d950fab93b60c9009226c63a28808bc8386e05301e25883ac0a"
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5' and python_version < '4'",
-            "version": "==1.26.10"
+            "version": "==1.26.11"
         },
         "virtualenv": {
             "hashes": [
-                "sha256:288171134a2ff3bfb1a2f54f119e77cd1b81c29fc1265a2356f3e8d14c7d58c4",
-                "sha256:b30aefac647e86af6d82bfc944c556f8f1a9c90427b2fb4e3bfbf338cb82becf"
+                "sha256:6cc42cad4d1a15c7ea5ed68e602eb49cc243b52d2eead36e577555cb56bf8705",
+                "sha256:bde925b831f36053a0fa7a468ca337dee26851c9f0bfc3d72a79d534703102d2"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
-            "version": "==20.15.1"
+            "markers": "python_version >= '3.6'",
+            "version": "==20.16.1"
         },
         "webencodings": {
             "hashes": [
@@ -659,14 +659,6 @@
         "yabs": {
             "editable": true,
             "path": "./../yabs"
-        },
-        "yabs-cowsay": {
-            "hashes": [
-                "sha256:6b3f9a95151543219e94fe6dcb2d421a2dc3fcac7811656efea8a2b0bf2a41bc",
-                "sha256:f8f2725e6be550bf0c23ef16a02073a3cca5b5bc904393fc4c2558a19108258b"
-            ],
-            "index": "pypi",
-            "version": "==0.0.4"
         },
         "zipp": {
             "hashes": [
