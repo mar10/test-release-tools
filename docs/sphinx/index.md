@@ -29,9 +29,29 @@ Temporary repository and throw-away project to test the
 www.example.com
 
 
+## Table
+
+| a | b |
+| - | - |
+| - | - |
+| 0 | 1 |
+
+
 ## Mermaid
 
 ```{mermaid}
 graph LR
   a --> b
+```
+
+
+## Graphwiz
+
+```{graphviz}
+:caption: caption of the graph (text)
+
+New in version 1.1.
+   digraph foo {
+      "bar" -> "baz";
+   }
 ```
