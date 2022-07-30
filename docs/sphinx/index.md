@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-## Welcome to yabs_test's documentation!
+# Welcome to yabs_test's documentation!
 
 .. toctree::
    :maxdepth: 2
@@ -17,18 +17,20 @@ Temporary repository and throw-away project to test the
 ```
 
 
-## Indices and tables
+# Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
 
 
-### Linkify
+## Linkify
 
 www.example.com
 
-### Mermaid
+
+## Mermaid
+
 ```{mermaid}
 graph LR
   a --> b

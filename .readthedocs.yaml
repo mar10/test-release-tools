@@ -20,10 +20,10 @@ python:
      - method: pip
        path: .
        extra_requirements:
-        #  - myst-parser
-        #  - linkify
-        - myst-parser[linkify]
-        - sphinxcontrib-mermaid
+         - myst-parser
+         - linkify
+        #  - myst-parser[linkify]
+        #  - sphinxcontrib-mermaid
 
 
 # submodules:
