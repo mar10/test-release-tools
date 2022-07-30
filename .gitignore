@@ -131,3 +131,4 @@ dmypy.json
 .vscode/
 _build/
 manifests/
+docs/sphinx-build/
