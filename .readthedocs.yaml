@@ -16,16 +16,17 @@ version: 2
 
 # Optionally declare the Python requirements required to build your docs
 python:
-  install:
-    - method: pip
-      path: .
-      extra_requirements:
-        - myst-parser
-        - linkify
-        # - myst-parser[linkify]
-        # - sphinxcontrib-mermaid
-    - method: pip
-      path: myst-parser[linkify]
+  requirements: docs/sphinx/requirements-docs.txt
+  # install:
+  #   - method: pip
+  #     path: .
+  #     extra_requirements:
+  #       - myst-parser
+  #       - linkify
+  #       # - myst-parser[linkify]
+  #       # - sphinxcontrib-mermaid
+  #   # - method: pip
+  #   #   path: myst-parser[linkify]
 
 
 # submodules:
