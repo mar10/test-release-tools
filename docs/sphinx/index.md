@@ -32,7 +32,6 @@ www.example.com
 
 | a | b |
 | - | - |
-| - | - |
 | 0 | 1 |
 
 
@@ -47,10 +46,8 @@ graph LR
 ## Graphwiz
 
 ```{graphviz}
-:caption: caption of the graph (text)
 
-New in version 1.1.
-   digraph foo {
-      "bar" -> "baz";
-   }
+digraph foo {
+   "bar" -> "baz";
+}
 ```
