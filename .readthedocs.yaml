@@ -18,17 +18,7 @@ version: 2
 python:
   install:
     - requirements: docs/sphinx/requirements.txt
-  #   - method: pip
-  #     path: .
-  #     extra_requirements:
-  #       - myst-parser
-  #       - linkify
-  #       # - myst-parser[linkify]
-  #       # - sphinxcontrib-mermaid
-  #   # - method: pip
-  #   #   path: myst-parser[linkify]
-
-
+  
 # submodules:
 #   include: all
 
