@@ -9,3 +9,6 @@
 
 Temporary repository and throw-away project to test the
 [yabs](https://github.com/mar10/yabs) tool.
+
+Test Sphinx Docs:
+https://yabs-test.readthedocs.io/en/latest/
