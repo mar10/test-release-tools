@@ -11,8 +11,7 @@ config:
     - type: __version__        # First entry is master for synchronizing
       file: yabs_test/__init__.py
   max_increment: minor
-  branches:                  # Allowed git branches
-    - master
+  branches: master # Allowed git branches
 
 tasks:
   # 'cowsay':
@@ -22,7 +21,6 @@ tasks:
 
   # 'check': Assert preconditons and fail otherwise
   - task: check
-    branches: master        # Current branch must be in this list
     os: null                # (str, list)
     python: ">=3.9"         # SemVer specifier
     winget: null            #  `null`: smart mode (false if `--no-winget`)
