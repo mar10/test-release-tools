@@ -132,3 +132,4 @@ dmypy.json
 _build/
 manifests/
 docs/sphinx-build/
+.DS_Store
