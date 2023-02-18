@@ -114,9 +114,11 @@ tasks:
 
   - task: push
 
-  - task: winget_release
-    upload: "bdist_msi"
-    package_id: foobar
+  # Windows Packager Manager release of yabs_test was rejected:
+  #   https://github.com/microsoft/winget-pkgs/pull/67330
+  # - task: winget_release
+  #   upload: "bdist_msi"
+  #   package_id: foobar
 
   # - task: cowsay
   #   message: |
