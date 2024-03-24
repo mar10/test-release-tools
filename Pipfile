@@ -16,9 +16,9 @@ black = "*"
 [packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3.12"
 
 [pipenv]
 # TODO: remove this when sty releases a real version
 #allow_prereleases = true
-allow_prereleases = true
+
